@@ -1,0 +1,30 @@
+kind: Deployment
+apiVersion: apps/v1
+
+metadata:
+  name: nwinddb-deployment
+  namespace: myns
+  labels: 
+      app: nwinddb-deployment
+      version: v1
+
+spec: 
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nwinddb-deployment
+      version: v1
+  template: 
+    metadata:
+      name: nwinddb-deployment
+      labels: 
+        app: nwinddb-deployment
+        version: v1
+    spec:
+        containers:
+        - name: nwinddb-deployment
+          image: stackupiss/northwind-db:v1
+          imagePullPolicy: Always
+          ports:
+          - name: mysql-port
+            containerPort: 3306
