@@ -1,0 +1,61 @@
+kind: Secret
+apiVersion : v1
+metadata:
+  name: mywlbapp-secret
+  namespace: myns
+  labels: 
+      app: mywlbapp-secret
+      version: v1
+  data:
+    app_id: ZDhhOWE5ODI2MzA1NjcwM2QwNjY1YWY1Yjk5NjM3ZTk=
+ 
+
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: mywlbapp-svc-deployment
+  namespace: myns
+  labels: 
+      app: mywlbapp-svc-deployment
+      version: v1
+spec: 
+  replicas: 2
+metadata:
+  name: mywlbapp-svc-deployment
+  namespace: myns
+  labels: 
+      app: mywlbapp-svc-deployment
+      version: v1
+  template: 
+    metadata:
+      name: mywlbapp-svc-pod
+      labels: 
+        app: mywlbapp-svc-pod
+        version: v1
+    spec:
+        containers:
+        - name: mywlbapp
+          image: stackupiss/weather:v1
+          imagePullPolicy: Always
+          ports:
+          - name: mywlbapp-port
+            containerPort: 3000
+
+
+kind: Service
+apiVersion: v1
+
+metadata:
+    name: mywlbapp-svc
+    namespace: myns
+    labels:
+        app: mywlbapp-svc
+
+spec:
+    type: ClusterIP
+    selector:
+        app: mywlbapp-pod
+    ports:
+    - name: mywbapp-svc-port
+      port: 80
+      targetPort: mywbapp-port
