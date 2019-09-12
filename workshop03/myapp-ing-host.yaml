@@ -28,8 +28,4 @@ spec:
           backend:
             serviceName: fortune-svc
             servicePort: 3000
-Collapse
-
-
-
 
